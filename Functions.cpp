@@ -2,6 +2,24 @@
 #include <vector>
 
 
+char Display_Menu() {
+    string choice;
+    cout << "Please select an option from below:" << endl;
+    cout << "A - search array\n";
+    cout << "B - modify value in array\n";
+    cout << "C - add value to end of array\n";
+    cout << "D - remove or reset value in array to zero (0)\n";
+    cout << "E - Quit\n";
+    cin >> choice;
+
+    while (choice.size() > 1 || toupper(choice[0]) != 'A' && toupper(choice[0]) != 'B' && toupper(choice[0]) != 'C' && toupper(choice[0]) != 'D' && toupper(choice[0]) != 'E') {
+        cout << "Please select a valid option between A B C and D:  ";
+        cin >> choice;
+    }
+
+    return toupper(choice[0]);
+}
+
 void printValues(int array[], int arraySize) {
     for (int i = 0; i < arraySize; i++) {
         cout << array[i] << " ";
@@ -11,6 +29,7 @@ void printValues(int array[], int arraySize) {
 
 
 void searchValue(int array[], int value, int arraySize) {
+
     char exists = 'n';
     int i;
     vector<int> index;
@@ -49,14 +68,14 @@ void changeValue(int array[], int value, int index, int arraySize) {
     }
 
     cout << "The old value at this index was " << temp_val << endl;
-    cout << "The new value at this index is now" << value << endl;
+    cout << "The new value at this index is now " << value << endl;
 
 }
 
 void addValue(int* &array, int value, int &arraySize) {
 
     arraySize = arraySize + 1;
-    int* resized = new int[arraySize];
+    int* resized = new int[arraySize]; //array size is changed by copying array into larger dynamic array, deleting old array, and resetting it to the copied larger array
     for (int i = 0; i < arraySize - 1; i++) {
         resized[i] = array[i];
     }
@@ -89,17 +108,17 @@ void resetValue(int* &array, int index, int &arraySize) {
 
         else {
             int* newArr = new int[arraySize - 1];
-            if (index == arraySize - 1) {
+            if (index == arraySize - 1) { //accounting for if it is the last value being changed
                 for (int i = 0; i < index; i++) {
                     newArr[i] = array[i];
                 }
             }
             else{
                 for (int i = 0; i < index; i++) {
-                    newArr[i] = array[i];
+                    newArr[i] = array[i]; //copying values up until value at index
                 }
                 for (int i = index; i < arraySize - 1; i++) {
-                    newArr[i] = array[i + 1];
+                    newArr[i] = array[i + 1]; //shifting values one index back in copy in order to properly decrease array size
                 }
             }
 
